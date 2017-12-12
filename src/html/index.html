@@ -24,6 +24,7 @@
 <body class="flat-blue">
 <div class="app-container">
     <div class="row content-container">
+        <!-- 顶部导航 -->
         <nav class="navbar navbar-default navbar-fixed-top navbar-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -114,13 +115,14 @@
                 </ul>
             </div>
         </nav>
+        <!-- 侧边栏 -->
         <div class="side-menu sidebar-inverse">
             <nav class="navbar navbar-default" role="navigation">
                 <div class="side-menu-container">
                     <div class="navbar-header">
                         <a class="navbar-brand" href="#">
                             <div class="icon fa fa-paper-plane"></div>
-                            <div class="title">Flat Admin V.2</div>
+                            <div class="title">Flat Admin V.24</div>
                         </a>
                         <button type="button" class="navbar-expand-toggle pull-right visible-xs">
                             <i class="fa fa-times icon"></i>
@@ -248,8 +250,8 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <a href="license.html">
+                        <li id="license">
+                            <a href="#" onclick="changeContent('license.html','license')">
                                 <span class="icon fa fa-thumbs-o-up"></span><span class="title">License</span>
                             </a>
                         </li>
@@ -260,7 +262,7 @@
         </div>
         <div class="copyrights">Collect from <a href="http://www.cssmoban.com/">免费网站模板</a></div>
         <!-- Main Content -->
-        <div class="container-fluid">
+        <div class="container-fluid" id="main_content">
             <div class="side-body padding-top">
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
@@ -476,10 +478,12 @@
             </div>
         </div>
     </div>
+
+    <!-- 最底部的版权信息 -->
     <footer class="app-footer">
         <div class="wrapper">
             <span class="pull-right">2.1 <a href="#"><i class="fa fa-long-arrow-up"></i></a></span> © 2017 Copyright.
-            More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
+            More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from1 <a
                 href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
         </div>
     </footer>
@@ -501,7 +505,23 @@
 <script type="text/javascript" src="../js/index.js"></script>
 
 <script>
+    function changeContent(url, obj) {
 
+        $("li.active").removeClass("active");
+        $("#" + obj).addClass("active");
+        $.ajax({
+            type: "get",
+            async: true,  //同步请求
+            url: url,
+            timeout: 60000, //请求超时时间，数据统计功能较为耗时，此处为兼容其设置
+            success: function (htmlData) {
+                $("#main_content").html(htmlData);
+            },
+            error: function (request) {
+                alert('操作失败，请稍候重试。' + request.status + ' - ' + url);
+            }
+        });
+    }
 </script>
 </body>
 
